@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<style>
+	iframe{
+  display: none;
+  }
+  .rotated{
+    -ms-transform: rotate(270deg); /* IE 9 */
+    -webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
+    transform: rotate(270deg);
+}
+</style>
+<body>
+  <section class="container-md">
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">DedSEC</h1>
+        <p class="lead">На этом ресурсе вы можете проверить безопасность любого сайта или API</p>
+      </div>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Зачем это нужно?
+            </button>
+          </h5>
+        </div>
+    
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            Каждый современный человек, ежедневно проводит время в интернете. Но интернет — это не только источник информации и возможность общаться на расстояние, но и угроза компьютерной безопасности. Вы можете скачать из сети компьютерный вирус, Вашу учетную запись или адрес электронной почты, могут взломает злоумышленник.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Как это работает?
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+            Первый и самый часто встречаемый это XSS атаки и HTML-инъекции (по причинам отсутствия в наше время проблемы с SQL-инъекциями их мы не проверяем).
+          </div>
+          <div class="card-body">
+            К Сожалению многие эксплойты и марвелы быстро адаптируются и становятся все сложней и сложней. А так же часть из них полностью завязана на соц.инженерии, а значит необходимы базы с собранными опасными ресурсами а также более тяжелая артиллерия проверки которую не возможно реализовать на JS или PHP. Имено по этой причини в нашу проверку входит проверка с помощью API GOOGLE Safe Browsing.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Что такое Safe Browsing?
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+            Safe Browsing - это служба Google, которая позволяет клиентским приложениям проверять URL-адреса на соответствие постоянно обновляемым спискам небезопасных веб-ресурсов Google. Примерами небезопасных веб-ресурсов являются сайты социальной инженерии (фишинговые и вводящие в заблуждение сайты) и сайты, на которых размещено вредоносное или нежелательное программное обеспечение. Приходите посмотреть, что возможно.
+            <p>Для проверки вам не обходим сделать следующее:</p>
+              <p>Перейдите на интересующий вас сайт и совершите поиск по нему любого слова</p>
+              <p>Тперерь выделите в строке адресса строку по знак '=' и вставте его в инпут ниже</p>
+              <p>например https://playground.learnqa.ru/demo/xss?q=  или   https://testsafebrowsing.appspot.com/s/malware.html</p> 
+              
+          </div>
+        </div>
+    </div>
+    <form class="form-inline">
+      <div class="form-group mx-sm-3 mb-2">
+        
+      <div class="input-group-prepend">
+        <div class="input-group-text">пример: "https://example.com/demo/search?q="</div>
+      </div>
+        <label for="inputPassword2" class="sr-only">example.com/demo/search?q=</label>
+        <input type="text" class="form-control" id="siteName" placeholder="example.com">
+      </div>
+      <input type="button" id="buttonElement" class="btn btn-primary mb-2" value="Check"></input>
+    </form>
+    <div><p id="ERROR"></p></div>
+    <div>
+      <p id="XSS"></p>
+      <hr>
+    </div>
+
+
+
+
+    <table id="table" class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">MALWARE</th>
+            <th scope="col">SOCIAL_ENGINEERING</th>
+            <th scope="col">THREAT_TYPE_UNSPECIFIED</th>
+            <th scope="col">UNWANTED_SOFTWARE</th>
+            <th scope="col">POTENTIALLY_HARMFUL_APPLICATION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="PLATFORM_TYPE_UNSPECIFIED">
+            <th scope="row">PLATFORM_TYPE_UNSPECIFIED</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="WINDOWS">
+            <th scope="row">WINDOWS</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="LINUX">
+            <th scope="row">LINUX</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="ANDROID">
+            <th scope="row">ANDROID</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="OSX">
+            <th scope="row">OSX</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="IOS">
+            <th scope="row">IOS</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="ANY_PLATFORM">
+            <th scope="row">ANY_PLATFORM</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="ALL_PLATFORMS">
+            <th scope="row">ALL_PLATFORMS</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+          <tr id="CHROME">
+            <th scope="row">CHROME</th>
+            <td class="MALWARE">NO</td>
+            <td class="SOCIAL_ENGINEERING">NO</td>
+            <td class="THREAT_TYPE_UNSPECIFIED">NO</td>
+            <td class="UNWANTED_SOFTWARE">NO</td>
+            <td class="POTENTIALLY_HARMFUL_APPLICATION">NO</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+
+
+
+
+
+
+
+    
+  </section>
+	
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+	<script>
+		function handlerMessage(e){//слушатель событий который отлавливает пост меседжи
+			var data = JSON.parse(e.data);
+			console.log(e)
+			var origin = e.origin;
+			XSS.textContent = "XSS уязвимость обнаружена"//если угроза обнаружена
+		}
+		if(window.addEventListener){
+			window.addEventListener('message', handlerMessage);
+		} else {
+			window.attachEvent('message', handlerMessage);
+		}
+
+		buttonElement.addEventListener('click', {
+			handleEvent: function (event) { 
+				let site = siteName.value//после события клик мы получим нашу строку с url сайта который проверяем
+				try {
+          ERROR.textContent = ""
+					const url = new URL(site)//это  условия для нашего трай кетчь если не верный url то при создании екземпляра мы получим екзепшен и перейдем в кетч
+
+					let xss = `${site}<script>parent.postMessage(JSON.stringify({key: 'value'}), '*');<\/script>`;//скрип выполнится на другом интернет ресурсе после чего откроет нам postMessage таким оброзом мы обойдем кросс защиту и получим в слушатель событий сообщение и запустим функцию, так мы узнаем что сайт уязвимю
+					
+					let iframe = document.createElement("iframe")//нам нужен айфрейм что бы с эмулировать пользователя который откроет сайт с вероятной угрозой xss
+					iframe.setAttribute('src',xss)
+					document.body.appendChild(iframe)
+					
+					XSS.textContent = "XSS уязвимость не обнаружена"//выводим по умолчанию если угрозы нет
+
+          axios({//библиотеку axios используем что бы упростить наш пост запрос на серверную часть нашего сервиса
+            method: 'POST',
+            withCredentials: true,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            url: 'http://xss.mnml.pp.ua/index.php',//адресс нашего сервера 
+            data: `site=${site}`//адрес проверяемого сайта
+          })
+          .then(function (response) {
+            var data = response.data.matches;
+            console.table(data)
+
+            let _td = document.querySelectorAll('td')
+            for (let i = 0; i < _td.length; i++) {
+              const element = _td[i];
+              element.textContent = "NO"
+            }
+            for (let i = 0; i < data.length; i++) {
+              const element = data[i];
+              
+              let tr = document.getElementById(element.platformType)
+              let td = tr.getElementsByClassName(element.threatType)
+              td[0].textContent = "YES"
+            }
+          })
+          .catch(function (error) {
+            console.log(error)//в случае ошибки нашего пост запроса на сервер выведуться в консоле
+          });
+
+				} catch (error) {
+          XSS.textContent = "XSS уязвимость не обнаружена"
+					ERROR.textContent = "невалидный url, возможно вы не указали <https://>"//валидация не пройдена урл не верен
+          let _td = document.querySelectorAll('td')
+            for (let i = 0; i < _td.length; i++) {
+              const element = _td[i];
+              element.textContent = "NO"
+            }
+				}
+			}
+		});
+	</script>
+</body>
+</html>
